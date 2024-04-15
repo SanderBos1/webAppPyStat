@@ -1,3 +1,7 @@
 pytest
 black
 pylint
+flask
+python-dotenv
+pandas
+Flask-Session
