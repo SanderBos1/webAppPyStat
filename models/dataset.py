@@ -1,5 +1,4 @@
 from pandas.api.types import is_numeric_dtype
-import pandas as pd
 
 
 
@@ -9,12 +8,15 @@ class userDataset:
     
     """
     def __init__(self, dataset):
-        self.dataset = pd.read_csv(dataset.stream)
+        self.dataset = dataset
 
     def getColumn(self, column):
         return self.dataset[column]
     
     def getColumns(self):
+        """
+        Gets all the numerical columns of the dataset
+        """
         numerical_columns = []
         for column in self.dataset.columns:
             if is_numeric_dtype(self.dataset[column]):
@@ -24,3 +26,4 @@ class userDataset:
     def getDataset(self):
         return self.dataset
 
+    

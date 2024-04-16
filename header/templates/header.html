@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="{{url_for('headerBP.static',filename='styles/header.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles/standards.css')}}">
+
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="header">
+            <ul class="noPointUl flex headerUL">
+            <li class="headerLi">
+                <form id="loadFile", method="POST" enctype="multipart/form-data" action="/loadData">
+                    <input type="file" id="myFile" name="filename" accept=".pyStat">
+                    <input type="submit" value="loadFile">
+                </form>
+        </li>
+        <li class="headerLi">
+            <a href="{{url_for('headerBP.savePytest')}}"><button>Save</button></a>
+        </li>
+    <li class="headerLi">
+        <form id="csvUpload", method="POST" enctype="multipart/form-data" action="/loadCSV">
+            <input type="file" id="myFile" name="filename" accept=".csv">
+            <input type="submit", value="load CSV">
+        </form>
+    </li>
+            </ul>
+        </div>
+
+    <div class="content flex">
+    {% block content %}
+    {% endblock %}
+    </div>
+
+</body>
+
+<script src="{{url_for('headerBP.static',filename='scripts/header.js')}}"></script>
+
+{% block scripts%}
+{% endblock%}
+</html>

@@ -1,7 +1,6 @@
-from flask import Blueprint, render_template, session, request
-import pandas as pd
-from models import userDataset
-
+from flask import Blueprint, render_template, session, request, send_file
+from statFunctions import mean, median, mode, variance, standardDeviation, statCount
+import json
 
 userDashboardBp = Blueprint(
     "userDashboardBp",
@@ -11,19 +10,28 @@ userDashboardBp = Blueprint(
     static_url_path="/userDashboard/static",
 )
 
+
 @userDashboardBp.route('/', methods=["POST", "GET"])
-def hello_world():
-    session['dataset'] = "test"
+def startPage():
     return render_template('userCanvas.html')
 
-@userDashboardBp.route('/load_csv', methods=["POST"])
-def load_csv():
-    """
-    Converts a csv file to dataframe and sets the dataframe session variable
+@userDashboardBp.route('/descriptive/<column>', methods=["POST", "GET"])
+def descriptive(column):
+    columnMean = mean(column)
+    columnMedian = median(column)
+    columnMode = mode(column)
+    columnVariance = variance(column)
+    columnStandardDeviation = standardDeviation(column)
+    columnStatCount = statCount(column)
 
-    """
-    f  = request.files['filename']
-    session['dataset'] = userDataset(f)
-    print(session['dataset'].getColumns())
+    descriptiveStats = {
+        "mean": columnMean,
+        "median": columnMedian,
+        "columnMode": columnMode,
+        "columnVariance": columnVariance,
+        "columnStandardDeviation": columnStandardDeviation,
+        "columnStatCount": columnStatCount
+    }
+    print(descriptiveStats)
 
-    return "session dataset has been created"
+    return json.dumps(descriptiveStats)

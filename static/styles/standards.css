@@ -1,0 +1,38 @@
+:root {
+    --main-bg-color: white;
+    --main-orange-color: #ED693C;
+    --main-orange-border: #db6137;
+    --main-red-color: #fabeb9;
+    --main-red-border: #e8b0ac;
+    --main-hover-color: #F0F0F0;
+    --main-error-red: red;
+}
+
+html{
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+
+}
+
+* {
+    position:relative;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.flex {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+}
+
+.noPointUl{
+    list-style-type: none;
+}

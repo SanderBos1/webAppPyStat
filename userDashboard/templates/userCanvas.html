@@ -1,4 +1,34 @@
-{% extends "base.html" %}
+{% extends "header.html" %}
+
 {% block head %}
-<script src="{{url_for('userDashboardBp.static',filename='scripts/userCanvas.js')}}"></script>
-{% endblock%}
+<link rel="stylesheet" type="text/css" href="{{url_for('userDashboardBp.static',filename='styles/userCanvas.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div class="buttons flex">
+            <button class="functionButton" id="addDescription">Description</button>
+            <button class="functionButton" id="addMean">Mean</button>
+            <button class="functionButton"id="addTTest">TTest</button>  
+    </div>
+
+    <div class="columns">
+    {%if columns %}
+        {% for column in columns%}
+        <p id="columnTexs">{{column}}</p>
+        {% endfor %}
+    {%endif%}
+
+    </div>
+
+    <div class="userCanvas">
+
+    </div>
+{% endblock %}
+
+
+
+{% block scripts %}
+<script src="{{url_for('userDashboardBp.static',filename='scripts/statFunctions.js')}}"></script>
+
+{% endblock %}
+
