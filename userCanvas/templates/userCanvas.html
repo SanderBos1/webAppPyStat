@@ -1,7 +1,7 @@
 {% extends "header.html" %}
 
 {% block head %}
-<link rel="stylesheet" type="text/css" href="{{url_for('userDashboardBp.static',filename='styles/userCanvas.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('userCanvasBP.static',filename='styles/userCanvas.css')}}">
 {% endblock %}
 
 {% block content %}
@@ -14,13 +14,13 @@
     <div class="columns">
     {%if columns %}
         {% for column in columns%}
-        <p id="columnTexs">{{column}}</p>
+        <p id="columnText" draggable="true" ondragstart="drag(event)">{{column}}</p>
         {% endfor %}
     {%endif%}
 
     </div>
 
-    <div class="userCanvas">
+    <div class="flex" id="userCanvas">
 
     </div>
 {% endblock %}
@@ -28,7 +28,7 @@
 
 
 {% block scripts %}
-<script src="{{url_for('userDashboardBp.static',filename='scripts/statFunctions.js')}}"></script>
+<script src="{{url_for('userCanvasBP.static',filename='scripts/statFunctions.js')}}"></script>
 
 {% endblock %}
 
