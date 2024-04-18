@@ -12,7 +12,7 @@ def mean(column):
     mean_list = session['dataset'].getColumn(column)
     if is_numeric_dtype(mean_list):
         mean_list = list(map(float, mean_list))
-        return np.mean(mean_list, dtype=np.float64)
+        return round(np.mean(mean_list, dtype=np.float64), 4)
     else:
         answer = "This column is not numerical"
         return answer
@@ -22,7 +22,7 @@ def median(column):
     median_list = session['dataset'].getColumn(column)
     if is_numeric_dtype(median_list):
         mean_list = list(map(float, median_list))
-        return np.median(mean_list)
+        return round(np.median(mean_list), 4)
     else:
         answer = "This column is not numerical"
         return answer
@@ -31,7 +31,7 @@ def mode(column):
     mode_list = session['dataset'].getColumn(column)
     if is_numeric_dtype(mode_list):
         mode_list = list(map(float, mode_list))
-        return st.mode(mode_list)[0]
+        return round(st.mode(mode_list)[0], 4)
     else:
         answer = "This column is not numerical"
         return answer
@@ -45,7 +45,7 @@ def variance(column):
     var_list = session['dataset'].getColumn(column)
     if is_numeric_dtype(var_list):
         var_list = list(map(float, var_list))
-        return np.var(var_list, dtype=np.float64)
+        return round(np.var(var_list, dtype=np.float64), 4)
     else:
         answer = "This column is not numerical"
         return answer
@@ -54,7 +54,7 @@ def standardDeviation(column):
     sd_list = session['dataset'].getColumn(column)
     if is_numeric_dtype(sd_list):
         var_list = list(map(float, sd_list))
-        return np.std(var_list, dtype=np.float64)
+        return round(np.std(var_list, dtype=np.float64), 4)
     else:
         answer = "This column is not numerical"
         return answer

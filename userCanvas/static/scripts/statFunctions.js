@@ -62,11 +62,11 @@ function normalityCalculation(columnHolder, column){
         // Gets the closest element with the class normalityWidget
         var parent = columnHolder.closest(".normalityWidget");
         tableElements = parent.getElementsByClassName('normalityAnswer');
-        let i = 0
-        for (key in answers){
-            tableElements[i].innerHTML = answers[key]
-            i++
-        }
+        tableElements[0].innerHTML =  answers['pValue'] 
+        tableElements[1].innerHTML =  answers['statistic'] 
+        var imageHolder = parent.querySelector(".normalImageHolder")
+        imageHolder.innerHTML = "<img class=standard_img src='data:image/png;base64," + answers['imageData'] + "'/>"
+
 
     }
 })
@@ -75,7 +75,6 @@ function normalityCalculation(columnHolder, column){
 // Calculates the ttest test for the selected columns
 
 function ttestCalculation(columnHolder, column1, column2){
-    console.log(column1, column2)
     $.ajax({
     type:'POST',
     url:'/ttest/' + column1 + "/" + column2,
@@ -88,11 +87,10 @@ function ttestCalculation(columnHolder, column1, column2){
         // Gets the closest element with the class ttestWidget
         var parent = columnHolder.closest(".ttestWidget");
         tableElements = parent.getElementsByClassName('ttestAnswer');
-        let i = 0
-        for (key in answers){
-            tableElements[i].innerHTML = answers[key]
-            i++
-        }
+        tableElements[0].innerHTML =  answers['pValue'] 
+        tableElements[1].innerHTML =  answers['statistic'] 
+        var imageHolder = parent.querySelector(".ttestImageHolder")
+        imageHolder.innerHTML = "<img class=standard_img src='data:image/png;base64," + answers['imageData'] + "'/>"
 
     }
 })
@@ -117,7 +115,7 @@ function allowDrop(ev) {
     var data = ev.dataTransfer.getData("text");
     ev.target.innerHTML = "<p>" + data + "</p>";
     var parent = ev.target.closest(".ttestWidget");
-    columnElements = parent.getElementsByClassName('columnDrop');
+    columnElements = parent.getElementsByClassName('ttestDrop');
     //Checks if both columns have been selected (by dragging to the drop area)
     if (!columnElements[0].innerHTML.includes("Drag column") && !columnElements[1].innerHTML.includes("Drag column")){
         ttestCalculation(ev.target, columnElements[0].innerText, data)

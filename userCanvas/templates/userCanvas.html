@@ -5,12 +5,14 @@
 {% endblock %}
 
 {% block content %}
-    <div class="buttons flex">
+<div class="userInteraction flex">
+    <div class="topLeft">
+        <div class="buttonHolder flex">
             <button class="functionButton" id="addDescription">Description</button>
-            <button class="functionButton" id="addMean">Mean</button>
-            <button class="functionButton"id="addTTest">TTest</button>  
+            <button class="functionButton" id="addMean">Normal Test</button>
+            <button class="functionButton"id="addTTest">T-Test</button>  
+        </div>
     </div>
-
     <div class="columns">
     {%if columns %}
         {% for column in columns%}
@@ -19,7 +21,7 @@
     {%endif%}
 
     </div>
-
+</div>
     <div class="flex" id="userCanvas">
 
     </div>

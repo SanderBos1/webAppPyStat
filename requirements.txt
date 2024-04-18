@@ -6,3 +6,4 @@ python-dotenv
 pandas
 Flask-Session
 scipy
+matplotlib

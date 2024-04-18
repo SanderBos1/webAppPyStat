@@ -1,7 +1,23 @@
-.buttons{
-    width:15%;
+.userInteraction{
+    position: fixed;
+    top:10%;
+    width:30%;
     height:100%;
-    border: 1px solid black; 
+    flex-flow: column wrap;
+}
+
+.topLeft{
+    width:100%;
+    height:50%;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.buttonHolder{
+    width:90%;
+    top:5%;
+    left: 5%;
+    height:90%;
     flex-flow: column wrap;
  
 }
@@ -12,43 +28,126 @@
 
 }
 
-
 .columns{
-    width:15%;
-    height:100%;
-    border: 1px solid black;  
+    position:absolute;
+    top:50%;
+    width:100%;
+    height:50%;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+
 }
 
 #userCanvas{
+    top:15%;
+    left:30%;
     width:70%;
-    height:100%;
-    flex-flow: column wrap;
-    border: 1px solid black;  
+    min-height:95%;
+    flex-flow: row wrap;
 }
 
 .widget{
     width:100%;
+    border-bottom: 1px solid black;
+
+}
+
+.widgetTop{
+    width:100%;
     height:10%;
+    background-color:  var(--main-orange-color);
     border: 1px solid black;  
 }
 
-.columnDrop{
-    width:10%;
-    height:100%;
-    border: 1px solid black;    
+.widgetContent{
+    left:5%;
+    width:100%;
+    height:85%;
     text-align: center;
 }
+
+.normalityDrop{
+    top: 5%;
+    width:15%;
+    height:30%;
+    border: 1px solid black;    
+    text-align: center;
+    margin-right:2%;
+}
+
+.widgetDelete{
+    height:100%;
+    width: 5%;
+    margin-left: auto;
+    background-color: var(--main-error-red);
+
+}
+
+/* descriptive widget */
+.descriptiveWidget{
+    height:25%;
+}
+
+.columnDrop{
+    width:15%;
+    top:10%;
+    height:60%;
+    border: 1px solid black;
+    text-align: center;
+    margin-right:2%;
+}
+
+/* normality widget */
+.normalityWidget{
+    height:40%;
+}
+
+.normalImageHolder{
+    top: 5%;
+    width:75%;
+    height:75%;
+    border: 1px solid black;
+}
+
+/* ttest widget */
+.ttestWidget{
+    width:100%;
+    height:40%;
+}
+.ttestDrops{
+    height:40%;
+    width:20%;
+    border: 1px solid black;
+}
+
+.ttestDrop{
+    height:50%;
+    width:100%;
+    border-bottom: 1px solid black;
+}
+
+.ttestResults{
+    left:5%;
+    width:75%;
+    height:100%;
+}
+.ttestTable{
+    width:90%;
+    height:30%;
+}
+
+.ttestImageHolder{
+    width:90%;
+    height:70%;
+    border: 1px solid black;
+}
+
 
 .descriptiveTable{
     width:80%;
     height:100%;
 }
 
-.descriptiveDelete{
-    height:20%;
-    margin-left: auto;
-
-}
 
 
 
