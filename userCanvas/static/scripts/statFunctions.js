@@ -136,3 +136,15 @@ function allowDrop(ev) {
     ev.target.innerHTML = "<p>" + data + "</p>";
     normalityCalculation(ev.target, data)
   }
+
+  //Move widget up or down deping on parameter
+  function moveOrder(button, direction){
+    var widget = button.closest(".widget")
+    var canvas = document.getElementById("userCanvas")
+    if(direction === 1 && widget.previousElementSibling) {
+        canvas.insertBefore(widget, widget.previousElementSibling);
+    }
+    else if(direction === -1 && widget.nextElementSibling != null){
+        canvas.insertBefore(widget.nextElementSibling, widget);
+    }
+  }

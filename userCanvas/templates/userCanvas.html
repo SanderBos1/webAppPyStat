@@ -14,12 +14,13 @@
         </div>
     </div>
     <div class="columns">
+        <div class="columnHolder">
     {%if columns %}
         {% for column in columns%}
-        <p id="columnText" draggable="true" ondragstart="drag(event)">{{column}}</p>
+        <p class= "columnText" draggable="true" ondragstart="drag(event)">{{column}}</p>
         {% endfor %}
     {%endif%}
-
+        </div>
     </div>
 </div>
     <div class="flex" id="userCanvas">

@@ -10,7 +10,8 @@ class descriptiveWidget extends HTMLElement {
         this.render();
     }
     render(){
-        var template = "<div class='widgetTop flex'> <button class='widgetDelete' onclick =deleteWidget(this," + "'.descriptiveWidget')" + ">X</button> </div>";
+        var template = "<div class='widgetTop flex'> <button class='moveButton' onclick ='moveOrder(this, -1)' + >&#8595;</button> <button class='moveButton' onclick ='moveOrder(this,1)' + >&#8593;</button>";
+        template += "<button class='widgetDelete' onclick =deleteWidget(this," + "'.descriptiveWidget')" + ">X</button> </div>";
     	template +=  "<div class='widgetContent flex'> <div class='columnDrop' ondrop='columnDropDescriptive(event)' ondragover='allowDrop(event)'><p> Drag column </p></div>";
         template += "<table class='descriptiveTable'><tr><th>Mean</th><th>Median</th><th>Mode</th><th>Variance</th><th>Standard Deviation</th><th>Count</th></tr>"
         template+= "<tr><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td></tr></table></<div>"
@@ -33,11 +34,12 @@ class normalityWidget extends HTMLElement {
         this.render();
     }
     render(){
-    	var template = "<div class='widgetTop flex'> <button class='widgetDelete' onclick =deleteWidget(this," + "'.normalityWidget')" + ">X</button> </div>";
+    	var template = "<div class='widgetTop flex'> <button class='moveButton' onclick ='moveOrder(this, -1)'>&#8595;</button> <button class='moveButton' onclick ='moveOrder(this, 1)' + >&#8593;</button>";
+        template += "<button class='widgetDelete' onclick =deleteWidget(this," + "'.normalityWidget')" + ">X</button> </div>";
         template +=  "<div class='widgetContent flex'> <div class='normalityDrop' ondrop='columnDropNormality(event)' ondragover='allowDrop(event)'><p> Drag column </p></div>";
-        template+= "<div class='normalImageHolder'></div></<div>"
+        template+= "<div class='normalityResults'><div class='normalImageHolder'></div></<div>"
         template += "<table class='normalityTable'><tr><th>PValue</th><th>Statistic</th></tr>";
-        template+= "<tr><td class='normalityAnswer'>0</td><td class='normalityAnswer'>0</td></tr></table>";
+        template+= "<tr><td class='normalityAnswer'>0</td><td class='normalityAnswer'>0</td></tr></table></div>";
         this.innerHTML = template;
     }
 }
@@ -57,7 +59,8 @@ class ttestWidget extends HTMLElement {
         this.render();
     }
     render(){
-        var template = "<div class='widgetTop flex'> <button class='widgetDelete' onclick =deleteWidget(this," + "'.ttestWidget')" + ">X</button>; </div>";
+        var template = "<div class='widgetTop flex'> <button class='moveButton' onclick ='moveOrder(this, -1)' + >&#8595;</button> <button class='moveButton' onclick ='moveOrder(this, 1)' + >&#8593;</button>";
+        template += "<button class='widgetDelete' onclick =deleteWidget(this," + "'.ttestWidget')" + ">X</button></div>";
     	template +=  "<div class='widgetContent flex'> <div class='ttestDrops'> <div class='ttestDrop' ondrop='columnDropTTest(event)' ondragover='allowDrop(event)'><p> Drag column </p></div>";
         template += "<div class='ttestDrop' ondrop='columnDropTTest(event)' ondragover='allowDrop(event)'><p> Drag column </p></div></div>";
         template+= "<div class='ttestResults'><div class='ttestImageHolder'></div></<div>"

@@ -1,5 +1,5 @@
 :root {
-    --main-bg-color: white;
+    --main-text-color: white;
     --main-orange-color: #ED693C;
     --main-orange-border: #db6137;
     --main-red-color: #fabeb9;
@@ -44,3 +44,5 @@ body {
     object-fit: fill;
 
 }
+
+

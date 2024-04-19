@@ -14,18 +14,18 @@
         <div class="header">
             <ul class="noPointUl flex headerUL">
             <li class="headerLi">
-                <form id="loadFile", method="POST" enctype="multipart/form-data" action="/loadData">
-                    <input type="file" id="myFile" name="filename" accept=".pyStat">
-                    <input type="submit" value="loadFile">
+                <form class="headerInteraction" id="loadFile", method="POST" enctype="multipart/form-data" action="/loadData">
+                    <input  type="file" id="myFile" name="filename" accept=".pyStat">
+                    <input class="headerInteraction" type="submit" value="loadFile">
                 </form>
         </li>
         <li class="headerLi">
-            <a href="{{url_for('headerBP.savePytest')}}"><button>Save</button></a>
+            <a href="{{url_for('headerBP.savePytest')}}"><button class="headerInteraction">Save</button></a>
         </li>
     <li class="headerLi">
-        <form id="csvUpload", method="POST" enctype="multipart/form-data" action="/loadCSV">
+        <form class="headerInteraction" id="csvUpload", method="POST" enctype="multipart/form-data" action="/loadCSV">
             <input type="file" id="myFile" name="filename" accept=".csv">
-            <input type="submit", value="load CSV">
+            <input class="headerInteraction" type="submit", value="load CSV">
         </form>
     </li>
             </ul>
