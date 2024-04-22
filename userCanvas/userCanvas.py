@@ -16,7 +16,7 @@ userCanvasBP = Blueprint(
 def startPage():
     return render_template('userCanvas.html')
 
-@userCanvasBP.route('/descriptive/<column>', methods=["POST", "GET"])
+@userCanvasBP.route('/summaryStatistics/<column>', methods=["POST", "GET"])
 def descriptive(column):
     """
     Handles the calculation of all descriptive statistics

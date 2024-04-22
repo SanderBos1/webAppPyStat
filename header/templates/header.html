@@ -16,37 +16,28 @@
     </head>
     <body>
         <nav class="navbar sticky-top navbar-expand-lg navbar-light">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarCollapse">
+            <a class="navbar-brand" href="#">
+                <img src="static/images/random-logo-png-transparent.png" width="30" height="30" alt="">
+            </a>
+            <div class="collapse navbar-collapse mr-auto">
                 <ul class="navbar-nav ">
-                <li class="nav-item">
-                    <form  id="loadFile", method="POST" enctype="multipart/form-data" action="/loadData">
-                        <input  type="file" id="myFile" name="filename" accept=".pyStat">
-                        <input  type="submit" value="loadFile">
-                    </form>
-                </li>
-                <li class="nav-item">
-                    <a href="{{url_for('headerBP.savePytest')}}"><button class="headerInteraction">Save</button></a>
-                </li>
-                <li class="nav-item">
-                    <form class="headerInteraction" id="csvUpload", method="POST" enctype="multipart/form-data" action="/loadCSV">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/documentation">Documentation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/showDataset">Dataset</a></li>
+                </ul>
+            </div>
+
+                <form class="form-inline" id="csvUpload", method="POST" enctype="multipart/form-data" action="/loadCSV">
+                    <div class="form-group">
                         <input type="file" id="myFile" name="filename" accept=".csv">
                         <input class="headerInteraction" type="submit", value="load CSV">
-                    </form>
-                </li>
-            </ul>
-            </div>
-            <div class="navbar-nav">
-                <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/documentation">Documentation</a></li>
-                <li class="nav-item"><a class="nav-link" href="/showDataset">Dataset</a></li>
-            </ul>
+                    </div>
+                </form>
         </div>
             </div>
         </nav>
 
-    <div class="container-fluid">
+    <div class="container-fluid h-100">
     {% block content %}
     {% endblock %}
     </div>

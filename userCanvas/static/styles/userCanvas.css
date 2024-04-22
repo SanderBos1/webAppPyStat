@@ -1,0 +1,26 @@
+.widgetDelete{
+    background-color: var(--main-error-red)
+}
+.moveButton{
+    background-color: var(--main-orange-color)
+}
+
+.functionButton{
+    background-color: var(--main-orange-color);
+    color: var(--main-text-color)
+}
+
+.columnLabel{
+    background-color: var(--main-orange-color);
+    color: var(--main-text-color)
+}
+
+.dropPlace{
+    background-color: var(--main-orange-color);
+    color: var(--main-text-color)
+}
+
+.calculateTTest{
+    background-color: var(--main-orange-color);
+    color: var(--main-text-color) 
+}

@@ -28,7 +28,7 @@ function addWidget(element, className){
 function descriptiveStatCalculation(columnHolder, column){
     $.ajax({
     type:'POST',
-    url:'/descriptive/' + column,
+    url:'/summaryStatistics/' + column,
     processData: false,
     contentType: false,
     success:function(data)
@@ -132,20 +132,20 @@ function allowDrop(ev) {
   function columnDropTTest(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    ev.target.innerHTML = "<p>" + data + "</p>";
+    ev.target.innerHTML = data;
   }
   
   function columnDropDescriptive(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    ev.target.innerHTML = "<p>" + data + "</p>";
+    ev.target.innerHTML =  data;
     descriptiveStatCalculation(ev.target, data)
   }
 
   function columnDropNormality(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
-    ev.target.innerHTML = "<p>" + data + "</p>";
+    ev.target.innerHTML = data;
     normalityCalculation(ev.target, data)
   }
 

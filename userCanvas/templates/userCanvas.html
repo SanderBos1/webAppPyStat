@@ -5,24 +5,24 @@
 {% endblock %}
 
 {% block content %}
-<div class="row">
-    <div class="col-3 col-lg-2 position-fixed">
-        <div class="row">
-            <button class="col-5 offset-1 text-truncate functionButton" id="addDescription">Description</button>
-            <button class="col-5 offset-1 text-truncate functionButton" id="addMean">Normal Test</button>
-            <button class="col-5 offset-1 text-truncate functionButton"id="addTTest">T-Test</button>  
+<div class="row h-100">
+    <div class="col-3 col-lg-2 position-fixed h-100">
+        <div class="row me-3 mt-3 border border-dark ">
+            <button class="btn col-5 offset-1 text-truncate functionButton" id="addDescription">Summary Statistics</button>
+            <button class="btn col-5 offset-1 text-truncate functionButton" id="addMean">Normal Test</button>
+            <button class="btn col-5 offset-1 text-truncate functionButton"id="addTTest">T-Test</button>  
         </div>
-        <div class="row">
+        <div class="row me-3 mt-3 border border-dark h-50">
             <div class="col-12 text-truncate">
                 {%if columns %}
                 {% for column in columns%}
-                    <p draggable="true" ondragstart="drag(event)">{{column}}</p>
+                    <p class="columnLabel border border-dark" draggable="true" ondragstart="drag(event)">{{column}}</p>
                 {% endfor %}
                 {%endif%}
             </div>
         </div>
         </div>
-    <div class="col-9  col-lg-10 offset-lg-2 offset-3 " id="userCanvas">
+    <div class="col-9 col-lg-10 offset-lg-2 offset-3 mt-3 h-100" id="userCanvas">
 
     </div>
 

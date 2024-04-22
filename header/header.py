@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, request, send_file
+from flask import Blueprint, render_template, session, request, send_file, flash, redirect
 import json
 import pandas as pd
 from models import userDataset
@@ -46,6 +46,14 @@ def loadCSV():
     Converts a csv file to dataframe and sets the dataframe session variable
 
     """
+    if 'filename' not in request.files:
+        flash('No file part')
+        return render_template('userCanvas.html')
+    
+    file = request.files['filename']
+    if file.filename == '':
+            flash('No selected file')
+            return render_template('userCanvas.html')
     f  = request.files['filename']
     df = pd.read_csv(f.stream)
     session['dataset'] = userDataset(df)
@@ -64,4 +72,4 @@ def showDataset():
         return render_template('dataset.html')
     else:
         dataSet = session['dataset'].getDataset()
-        return render_template('dataset.html', dataset=dataSet.to_html())
+        return render_template('dataset.html', dataset=dataSet.to_html(max_rows = 100, classes="table table-hover thead-light table-striped"))
