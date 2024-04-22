@@ -51,3 +51,17 @@ def loadCSV():
     session['dataset'] = userDataset(df)
   
     return render_template('userCanvas.html', columns = session['dataset'].getColumns())
+
+
+@headerBP.route('/documentation', methods=["GET"])
+def documentation():
+    return render_template('documentation.html')
+
+
+@headerBP.route('/showDataset', methods=["GET"])
+def showDataset():
+    if session['dataset'] is None:
+        return render_template('dataset.html')
+    else:
+        dataSet = session['dataset'].getDataset()
+        return render_template('dataset.html', dataset=dataSet.to_html())

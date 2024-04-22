@@ -19,7 +19,7 @@ ttestButton.addEventListener("click", function(){
 //Input: the element to be added to the page and it's belong class name
 function addWidget(element, className){
     const widgetInstance = document.createElement(element)
-    widgetInstance.setAttribute("class", "widget " + className + " flex")
+    widgetInstance.setAttribute("class", "row border border-dark widget " + className + " flex")
     document.getElementById("userCanvas").appendChild(widgetInstance)
 
 }
@@ -74,26 +74,45 @@ function normalityCalculation(columnHolder, column){
 
 // Calculates the ttest test for the selected columns
 
-function ttestCalculation(columnHolder, column1, column2){
-    $.ajax({
-    type:'POST',
-    url:'/ttest/' + column1 + "/" + column2,
-    processData: false,
-    contentType: false,
-    success:function(data)
-    {
-        // parse the return data so that it is in JSON format
-        answers = JSON.parse(data)
-        // Gets the closest element with the class ttestWidget
-        var parent = columnHolder.closest(".ttestWidget");
-        tableElements = parent.getElementsByClassName('ttestAnswer');
-        tableElements[0].innerHTML =  answers['pValue'] 
-        tableElements[1].innerHTML =  answers['statistic'] 
-        var imageHolder = parent.querySelector(".ttestImageHolder")
-        imageHolder.innerHTML = "<img class=standard_img src='data:image/png;base64," + answers['imageData'] + "'/>"
+function ttestCalculation(button){
 
+    var parent = button.closest(".ttestWidget");
+    columnElements = parent.getElementsByClassName('ttestDrop');
+    selection = parent.getElementsByClassName('ttestIddChoice')[0].value;
+    if (!columnElements[0].innerHTML.includes("Drag column") && !columnElements[1].innerHTML.includes("Drag column")){
+        var column1 = columnElements[0].innerText
+        var column2 = columnElements[1].innerText
+
+        var sendInfo = {
+            "column1": column1,
+            "column2": column2,
+            "selection": selection
+        }
+        sendInfo = JSON.stringify(sendInfo)
+        $.ajax({
+            headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+            },
+        type:'POST',
+        url:'/ttest',
+        data: sendInfo,
+        success:function(data)
+        {
+            // parse the return data so that it is in JSON format
+            answers = JSON.parse(data)
+            // Gets the closest element with the class ttestWidget
+            tableElements = parent.getElementsByClassName('ttestAnswer');
+            tableElements[0].innerHTML =  answers['pValue'] 
+            tableElements[1].innerHTML =  answers['statistic'] 
+            var imageHolder = parent.querySelector(".ttestImageHolder")
+            imageHolder.innerHTML = "<img class=standard_img src='data:image/png;base64," + answers['imageData'] + "'/>"
+    
+        }
+    })
     }
-})
+
+
 }
 
 // Deletes the widget with current class name (closest to button)
@@ -114,13 +133,6 @@ function allowDrop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.innerHTML = "<p>" + data + "</p>";
-    var parent = ev.target.closest(".ttestWidget");
-    columnElements = parent.getElementsByClassName('ttestDrop');
-    //Checks if both columns have been selected (by dragging to the drop area)
-    if (!columnElements[0].innerHTML.includes("Drag column") && !columnElements[1].innerHTML.includes("Drag column")){
-        ttestCalculation(ev.target, columnElements[0].innerText, data)
-    }
-
   }
   
   function columnDropDescriptive(ev) {

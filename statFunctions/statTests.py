@@ -1,26 +1,32 @@
 import scipy.stats as sc
 from flask import session
 from matplotlib.figure import Figure
-import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 import numpy as np
 from scipy.stats import norm
 
-def ttest( column1, column2, indVariance):
+def ttest(dataInfo):
     """
     input: Two string containing the column of interests
     Uses: The session dataset object to get the columns
     Output: The ttest of the list
     """
-    answer = sc.ttest_ind(session['dataset'].getColumn(column1), session['dataset'].getColumn(column2), equal_var = indVariance)
+    column1 = session['dataset'].getColumn(dataInfo['column1'])
+    column2 = session['dataset'].getColumn(dataInfo['column2'])
+    indVariance = dataInfo['selection']
+    if indVariance == "True":
+        answer = sc.ttest_ind(column1, column2, equal_var = True)
+    else:
+        answer = sc.ttest_ind(column1, column2, equal_var = False)
+
     testStatistic = answer.statistic
     pvalue = answer.pvalue
 
     fig = Figure(figsize=(10, 3))
     ax = fig.subplots()
-    ax.boxplot([session['dataset'].getColumn(column1), session['dataset'].getColumn(column2)])
-    ax.set_title("T Test" + column1)
+    ax.boxplot([column1, column2])
+    ax.set_title("T Test " + dataInfo['column1'] + " " + dataInfo['column2'] )
     buf = BytesIO()
     fig.savefig(buf, format="jpg")
     imageData = base64.b64encode(buf.getbuffer()).decode("ascii")
@@ -53,7 +59,7 @@ def normalTest(column):
      np.exp(-0.5 * (1 / sigma * (bins - mu))**2)) 
     ax.plot(bins, y, '--', color ='black') 
 
-    ax.set_title("normal Test" + column)
+    ax.set_title("normal Test " + column)
     buf = BytesIO()
     fig.savefig(buf, format="jpg")
     imageData = base64.b64encode(buf.getbuffer()).decode("ascii")

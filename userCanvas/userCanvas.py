@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from statFunctions import mean, median, mode, variance, standardDeviation, statCount
 from statFunctions import ttest, normalTest
 import json
@@ -50,11 +50,12 @@ def normalTestRoute(column):
     answer = normalTest(column)
     return json.dumps(answer)
 
-@userCanvasBP.route('/ttest/<column1>/<column2>', methods=["POST", "GET"])
-def ttestTestRoute(column1, column2):
+@userCanvasBP.route('/ttest', methods=["POST", "GET"])
+def ttestTestRoute():
     """
     Calculates the normality test for the selected column
     returns a json object with the p-value
     """
-    answer = ttest(column1, column2, True)
+    sendInfo = request.json
+    answer = ttest(sendInfo)
     return json.dumps(answer)
