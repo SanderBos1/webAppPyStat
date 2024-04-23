@@ -1,20 +1,15 @@
 
+function statButtonListener(buttonId, widgetType, widgetClass) {
+    const button = document.getElementById(buttonId);
+    button.addEventListener("click", function() {
+        addWidget(widgetType, widgetClass);
+        saveWidgetState(widgetType, widgetClass);
+    });
+}
 
-descriptiveButton =  document.getElementById("addDescription");
-descriptiveButton.addEventListener("click", function(){
-    addWidget("descriptive-widget", "descriptiveWidget");
-});
-
-normalityButton =  document.getElementById("addMean");
-normalityButton.addEventListener("click", function(){
-     addWidget("normality-widget", "normalityWidget");
-});
-
-ttestButton =  document.getElementById("addTTest");
-ttestButton.addEventListener("click", function(){
-    addWidget("ttest-widget", "ttestWidget");
-});
-
+statButtonListener("addDescription", "descriptive-widget", "descriptiveWidget");
+statButtonListener("addMean", "normality-widget", "normalityWidget");
+statButtonListener("addTTest", "ttest-widget", "ttestWidget");
 
 //Input: the element to be added to the page and it's belong class name
 function addWidget(element, className){
@@ -75,7 +70,6 @@ function normalityCalculation(columnHolder, column){
 // Calculates the ttest test for the selected columns
 
 function ttestCalculation(button){
-
     var parent = button.closest(".ttestWidget");
     columnElements = parent.getElementsByClassName('ttestDrop');
     selection = parent.getElementsByClassName('ttestIddChoice')[0].value;
@@ -118,8 +112,20 @@ function ttestCalculation(button){
 // Deletes the widget with current class name (closest to button)
 function deleteWidget(button, className){
     var parent = button.closest(className);
-    parent.remove();
-}
+    var order = Array.from(parent.parentNode.children).indexOf(parent)
+    $.ajax({
+        type:'GET',
+        url:'/removeWidgetIndex/' + order,
+        success:function(data)
+        {
+            if(data != "None"){
+                parent.remove();
+
+                }
+            }
+
+        })};
+
 
 function allowDrop(ev) {
     ev.preventDefault();
@@ -150,13 +156,78 @@ function allowDrop(ev) {
   }
 
   //Move widget up or down deping on parameter
-  function moveOrder(button, direction){
-    var widget = button.closest(".widget")
-    var canvas = document.getElementById("userCanvas")
-    if(direction === 1 && widget.previousElementSibling) {
-        canvas.insertBefore(widget, widget.previousElementSibling);
+  function moveOrder(button, direction) {
+    var widget = button.closest(".widget");
+    var canvas = document.getElementById("userCanvas");
+    var sibling = direction === 1 ? widget.previousElementSibling : widget.nextElementSibling;
+
+    if (sibling) {
+        var oldIndex = Array.from(widget.parentNode.children).indexOf(widget);
+        var newIndex = direction === 1 ? oldIndex - 1 : oldIndex + 1;
+        var sendInfo = {
+            "oldIndex": oldIndex,
+            "newIndex": newIndex,
+            "direction": direction
+        };
+
+        sendInfo = JSON.stringify(sendInfo);
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            type: 'POST',
+            url: '/switchWidgetIndex',
+            data: sendInfo,
+            success: function(data) {
+                canvas.insertBefore(widget, sibling);
+                if (direction === 1) {
+                    widget.innerHTML = widgetInnerHTML;
+                } else {
+                    sibling.innerHTML = widgetInnerHTML;
+                }
+            }
+        });
     }
-    else if(direction === -1 && widget.nextElementSibling != null){
-        canvas.insertBefore(widget.nextElementSibling, widget);
+}
+
+ //When this function is called, it will add the state of the widget to the session variable
+  function saveWidgetState(type, className){
+
+    var sendInfo = {
+        "type": type,
+        "className":className,
     }
-  }
+    sendInfo = JSON.stringify(sendInfo)
+    $.ajax({
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
+    type:'POST',
+    url:'/widgetDictionary',
+    data: sendInfo,
+    success:function(data)
+    {}
+
+    })};
+
+    // if there is a page state, it will create these widgets on page load
+    window.onload = function(){
+        $.ajax({
+        type:'GET',
+        url:'/getWidgetDictionary',
+        success:function(data)
+        {
+            if(data != "None"){
+                for(widget in data){
+                    addWidget(data[widget]['type'], data[widget]['className']);
+
+                }
+            }
+
+        }
+    
+        })
+    }

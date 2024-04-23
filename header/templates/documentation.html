@@ -3,41 +3,114 @@
 <div class="row">
     <div class="col-8 offset-2 text-center">
         <h1>Documentation</h1>
+        <p class="text-start" >
+        Welcome to the documentation for the pyStat application. This web application aims to provide a low-code solution for performing various statistical tests.
+        Its core functionality revolves around your uploaded dataset, which is converted into a dataframe upon upload.
+        Numerical columns from your CSV dataset are then displayed on the homepage.
+        You can drag these columns to your chosen widget, created using the buttons on the left side of the homepage.
+        Each widget calculates a specific statistical function on the selected dataset column.
+        The theory and exact functionality of each widget are explained on this page.
+        </p>
+
+
+        <h2> Introduction</h2>
+        <p class="text-start" >
+        Statistics is a mathematical field that aims to analyze and make inferences from data. 
+        It is primarily concerned with understanding how data is structured and assessing the uncertainty within that data. 
+        A crucial aspect of statistics involves drawing samples from a larger population, such as all customers, to make informed conclusions.
+        For these conclusions to be valid, it is essential that the sample is representative of the entire population. 
+        This is why a random sample is often preferred, as it helps prevent sample bias.
+        Data can be divided into two main categories, each of which can be further subdivided into several types  (Neal & Cavey, 2022):
+        </p>
+        <ol>
+            <li><p class="text-start"><b>Numerical Data</b></p></li>
+                <ul>
+                    <li><p class="text-start">Discrete: Numerical values that take a finite set of possibilities (e.g., How many siblings do you have?).</p></li>
+                    <li><p class="text-start">Continuous: Numerical values that can take any value within a continuous range (e.g., height).</p></li>
+                </ul>
+            <li ><p class="text-start"><b>Categorical Data</b></p></li>
+                <ul>
+                    <li><p class="text-start">Ordinal: Categorical values that have a natural order (e.g., education level).</p></li>
+                    <li><p class="text-start">Nominal: Categorical values that do not have a natural order (e.g., eye color).</p></li>
+                    <li><p class="text-start">Binary: Data with only two possible outcomes (e.g., pass/fail, yes/no).</p></li>
+                </ul>
+        </ol>
 
         <h2> Summary Statistics</h2>
-        <p class="lead"></p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Nullam vel imperdiet ex. Suspendisse id mattis sapien, ac ullamcorper magna. 
-        Nullam malesuada lorem eu lectus luctus viverra. Curabitur vitae felis odio. 
-        Donec mollis, velit nec pellentesque auctor, ex dui eleifend diam, in sagittis ex nisl luctus orci. 
-        Duis et ipsum eget enim interdum sodales. Proin lobortis nec dui non ultrices. 
-        Pellentesque elementum molestie pharetra. Interdum et malesuada fames ac ante ipsum primis in faucibus. 
-        Nam a erat finibus, lacinia libero sed, semper massa. Suspendisse mi nisl, bibendum at sem finibus, sodales semper neque. 
-        In ultricies lacus dolor, et sollicitudin nisl faucibus quis. Pellentesque a sem purus. 
-        Aenean nec nibh nisl. Fusce varius vitae nulla maximus volutpat.
-        <h2>Normality Test</h2>
-        <p class="lead"></p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Nullam vel imperdiet ex. Suspendisse id mattis sapien, ac ullamcorper magna. 
-        Nullam malesuada lorem eu lectus luctus viverra. Curabitur vitae felis odio. 
-        Donec mollis, velit nec pellentesque auctor, ex dui eleifend diam, in sagittis ex nisl luctus orci. 
-        Duis et ipsum eget enim interdum sodales. Proin lobortis nec dui non ultrices. 
-        Pellentesque elementum molestie pharetra. Interdum et malesuada fames ac ante ipsum primis in faucibus. 
-        Nam a erat finibus, lacinia libero sed, semper massa. Suspendisse mi nisl, bibendum at sem finibus, sodales semper neque. 
-        In ultricies lacus dolor, et sollicitudin nisl faucibus quis. Pellentesque a sem purus. 
-        Aenean nec nibh nisl. Fusce varius vitae nulla maximus volutpat.
-        <h2>T Test</h2>
-        <p class="lead">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Nullam vel imperdiet ex. Suspendisse id mattis sapien, ac ullamcorper magna. 
-        Nullam malesuada lorem eu lectus luctus viverra. Curabitur vitae felis odio. 
-        Donec mollis, velit nec pellentesque auctor, ex dui eleifend diam, in sagittis ex nisl luctus orci. 
-        Duis et ipsum eget enim interdum sodales. Proin lobortis nec dui non ultrices. 
-        Pellentesque elementum molestie pharetra. Interdum et malesuada fames ac ante ipsum primis in faucibus. 
-        Nam a erat finibus, lacinia libero sed, semper massa. Suspendisse mi nisl, bibendum at sem finibus, sodales semper neque. 
-        In ultricies lacus dolor, et sollicitudin nisl faucibus quis. Pellentesque a sem purus. 
-        Aenean nec nibh nisl. Fusce varius vitae nulla maximus volutpat.
+        <p class="text-start" >
+        Any numerical value calculated from data is called a statistic. Therefore, statistics are functions of data. 
+        Before calculating complex statistical functions from your data, it is important to gain some general information about your data. 
+        This information is obtained by calculating simple summary statistics, which can be divided into two types: measures of location and measures of spread  (Neal & Cavey, 2022).
         </p>
+        <ul>
+            <li><p class="text-start">Measures of location aim to calculate a value that is typical for the data, such as the mean, mode, and median.</p></li>
+            <li><p class="text-start">Measures of spread aim to explain how variable your data is. Included in this category are metrics like the variance, standard deviation, range, and interquartile range.</p></li>
+        </ul>
+        <p class="text-start" > 
+            In this web application, you can create a "Summary Statistic Widget." 
+            The purpose of this widget is to calculate various summary statistics for a selected column of your uploaded dataset. 
+            The widget calculates the following metrics:
+        </p>
+        <ul>
+            <li><p class="text-start">Mean: The average of all values.</p></li>
+            <li><p class="text-start">Median: The middle value when all values are ordered from smallest to largest.</p></li>
+            <li><p class="text-start">Mode: The most frequently occurring value in the dataset.</p></li>
+            <li><p class="text-start">Variance: A measure of the spread of the values in the dataset, indicating how far each value is from the mean.</p></li>
+            <li><p class="text-start">Standard Deviation: The square root of the variance, providing a measure of the spread of the values around the mean in the same units as the data.</p></li>
+            <li><p class="text-start">Count: The total number of values in the dataset column.</p></li>
+            <li><p class="text-start">Min: The smallest value.</p></li>
+            <li><p class="text-start">Max: The largest value.</p> </li>
+        </ul>
+        <p class="text-start" >
+            These simple summary statistics provide a quick overview and deeper insight into the characteristics of your data.
+        </p>
+
+        <h2>Hypothesis Testing</h2>
+        <p class="text-start">
+            Hypothesis testing aims to determine if there is enough evidence in a sample of data to infer that a certain condition is true for the entire population.
+             In other words, it is a form of statistical inference. A standard hypothesis test typically follows these steps:
+        </p>
+        <ul>
+            <li><p class="text-start">Formulate the null hypothesis (H0), which represents your assumption about the data.</p></li>
+            <li><p class="text-start">Formulate the alternative hypothesis (H1), which is the hypothesis you want to test.</p></li>
+            <li><p class="text-start">Calculate the p-value based on your statistical test.</p></li>
+            <li><p class="text-start">Compare the p-value to your chosen level of significance, often denoted as &alpha;.</p></li>
+            <li><p class="text-start">Accept or reject your hypotheses based on the comparison.</p></li>
+        </ul>
+        <p class="text-start">
+            The p-value indicates the likelihood of observing the sample values. A low p-value suggests that the null hypothesis can be rejected. 
+            For example, in a test for normality, the p-value indicates how likely the results are if the data were normally distributed. 
+            A low p-value in this case suggests that the data is not normally distributed. 
+            The significance level, typically set at 0.05, is chosen to minimize type 2 errors (false negatives) (Anderson, D. R., Sweeny, D. J., & Williams, n.d.).
+        </p>
+        
+        <h2>Normality Test</h2>
+        <p class="text-start">
+            The normality test aims to determine if a dataset is normally distributed by using the normal hypothesis testing workflow, which is as follows:
+        </p>
+        <ul>
+            <li><p class="text-start">H0: The sample comes from a normal distribution.</p></li>
+            <li><p class="text-start">H1: The sample does not come from a normal distribution.</p></li>
+            <li><p class="text-start">Statistical test: \( s^2 + k^2 \) (where \( s \) is the z-score returned by skewtest and \( k \) is the z-score returned by kurtosistest). More information can be found on <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html#id2">SciPy</a>.</p></li>
+        </ul>
+        <h2>T Test</h2>
+        <p class="text-start" >
+        The ttest aims to test if the means of two indepdenent samples are significantly different from each other. It follows the normal hypothesis testing workflow, which is as follows:
+        </p>
+        <ul>
+            <li><p class="text-start">H0: The sample have identical averages</p></li>
+            <li><p class="text-start">H1: The sample do not have identical averages</p></li>
+            <li><p class="text-start">The t-statistic. More information can be found on <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html#id2">SciPy</a>.</p></li>
+        </ul>
+        <h2>Bibliography</h2>
+        <ol>
+            <li>
+               <p>Neal, P., & Cavey, D. (2022, september), <cite>Foundations of statistics. </cite> from: https://bookdown.org/peter_neal/math4081_notes/intro.html#intro_stats</p>
+            </li>
+            <li>
+                <p>Anderson, D. R., Sweeny, D. J., & Williams, T. A. (n.d.). <cite>Sample survey methods </cite>. Encyclopædia Britannica. https://www.britannica.com/science/statistics/Sample-survey-methods </p>
+            </li>
+        </ol>
     </div>
 </div>
 {% endblock %}

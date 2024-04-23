@@ -14,8 +14,8 @@ class descriptiveWidget extends HTMLElement {
         template += "<button class=' col-1 moveButton' onclick ='moveOrder(this,1)' + >&#8593;</button>";
         template += "<button class='col-1 offset-9 widgetDelete' onclick =deleteWidget(this," + "'.descriptiveWidget')" + ">X</button> </div>";
     	template +=  "<div class='row'> <div class='col-2 mt-3 columnDrop' ondrop='columnDropDescriptive(event)' ondragover='allowDrop(event)'><p class='border border-dark dropPlace's> Drag column </p></div>";
-        template += "<table class='col-10 descriptiveTable'><tr><th>Mean</th><th>Median</th><th>Mode</th><th>Variance</th><th>Standard Deviation</th><th>Count</th></tr>"
-        template+= "<tr><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td></tr></table></<div></div>"
+        template += "<table class='col-10 descriptiveTable'><tr><th>Mean</th><th>Median</th><th>Mode</th><th>Variance</th><th>Standard Deviation</th><th>Count</th><th>Min</th><th>Max</th></tr>"
+        template+= "<tr><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0<td class='descriptiveAnswer'>0</td><td class='descriptiveAnswer'>0</td></td><td class='descriptiveAnswer'>0</td></tr></table></<div></div>"
         this.innerHTML = template;
     }
 }

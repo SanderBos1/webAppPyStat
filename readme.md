@@ -6,3 +6,8 @@ These will calculate the results and you can interpret the results.
 For now, it only works with csv files.
 
 # How to install:
+
+
+# documentation:
+
+The explanation of the functionality of the web application can be found on the documentation page.

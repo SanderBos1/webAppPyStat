@@ -4,5 +4,8 @@
 
 .widgetTop{
     background-color: var(--main-orange-color);
+}
 
+.Definition{
+    background-color: var(--main-red-color)
 }
