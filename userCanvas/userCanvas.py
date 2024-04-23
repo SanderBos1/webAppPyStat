@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, session
 from statFunctions import mean, median, mode, variance, standardDeviation, statCount, statMin, statMax
-from statFunctions import ttest, normalTest
+from statFunctions import ttest, normalTest, statCorrelation
 import json
 
 userCanvasBP = Blueprint(
@@ -66,6 +66,16 @@ def ttestTestRoute():
     answer = ttest(sendInfo)
     return json.dumps(answer)
 
+
+
+@userCanvasBP.route('/correlation', methods=["POST", "GET"])
+def correlation():
+    """
+    Calculates the correlation for the selected columns
+    """
+    sendInfo = request.json
+    answer = statCorrelation(sendInfo) 
+    return json.dumps(answer)
 
 @userCanvasBP.route('/widgetDictionary', methods=["POST"])
 def widgetDictionary():

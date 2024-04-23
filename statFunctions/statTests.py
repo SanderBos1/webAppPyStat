@@ -68,3 +68,15 @@ def normalTest(column):
         "statistic": str(round(stat, 4)),
         "imageData": imageData  
     }
+
+
+def statCorrelation(dataInfo):
+    """
+    """
+    column1 = session['dataset'].getColumn(dataInfo['column1'])
+    column2 = session['dataset'].getColumn(dataInfo['column2'])
+    answer = sc.stats.pearsonr(column1, column2)
+    return {
+        "correlation": str(answer[0]),
+        "pValue": str(answer[1])
+    }

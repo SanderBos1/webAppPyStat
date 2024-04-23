@@ -10,6 +10,7 @@ function statButtonListener(buttonId, widgetType, widgetClass) {
 statButtonListener("addDescription", "descriptive-widget", "descriptiveWidget");
 statButtonListener("addMean", "normality-widget", "normalityWidget");
 statButtonListener("addTTest", "ttest-widget", "ttestWidget");
+statButtonListener("addCorrelation", "correlation-widget", "correlationWidget");
 
 //Input: the element to be added to the page and it's belong class name
 function addWidget(element, className){
@@ -20,7 +21,9 @@ function addWidget(element, className){
 }
 
 // Calculates the descriptive statistics for the selected column
-function descriptiveStatCalculation(columnHolder, column){
+function descriptiveStatCalculation(button){
+    var parent = button.closest(".descriptiveWidget");
+    column = parent.getElementsByClassName('columnDrop')[0].innerText;
     $.ajax({
     type:'POST',
     url:'/summaryStatistics/' + column,
@@ -31,7 +34,6 @@ function descriptiveStatCalculation(columnHolder, column){
         // parse the return data so that it is in JSON format
         answers = JSON.parse(data)
         // Gets the closest element with the class descriptiveWidget
-        var parent = columnHolder.closest(".descriptiveWidget");
         tableElements = parent.getElementsByClassName('descriptiveAnswer');
         let i = 0
         for (key in answers){
@@ -44,7 +46,9 @@ function descriptiveStatCalculation(columnHolder, column){
 }
 
 // Calculates the normality test for the selected column
-function normalityCalculation(columnHolder, column){
+function normalityCalculation(button){
+    var parent = button.closest(".normalityWidget");
+    column = parent.getElementsByClassName('columnDrop')[0].innerText;
     $.ajax({
     type:'POST',
     url:'/normality/' + column,
@@ -55,7 +59,6 @@ function normalityCalculation(columnHolder, column){
         // parse the return data so that it is in JSON format
         answers = JSON.parse(data)
         // Gets the closest element with the class normalityWidget
-        var parent = columnHolder.closest(".normalityWidget");
         tableElements = parent.getElementsByClassName('normalityAnswer');
         tableElements[0].innerHTML =  answers['pValue'] 
         tableElements[1].innerHTML =  answers['statistic'] 
@@ -109,6 +112,45 @@ function ttestCalculation(button){
 
 }
 
+
+function correlationCalculation(button){
+    var parent = button.closest(".correlationWidget");
+
+    columnElements = parent.getElementsByClassName('doubleDrops')[0].getElementsByClassName('ttestDrop');
+    console.log(columnElements)
+
+    if (!columnElements[0].innerHTML.includes("Drag column") && !columnElements[1].innerHTML.includes("Drag column")){
+        var column1 = columnElements[0].innerText
+        var column2 = columnElements[1].innerText
+
+        var sendInfo = {
+            "column1": column1,
+            "column2": column2,
+        }
+        sendInfo = JSON.stringify(sendInfo)
+        $.ajax({
+            headers: { 
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' 
+            },
+        type:'POST',
+        url:'/correlation',
+        data: sendInfo,
+        success:function(data)
+        {
+            answers = JSON.parse(data)
+            // Gets the closest element with the class ttestWidget
+            tableElements = parent.getElementsByClassName('correlationAnswer');
+            console.log(tableElements)
+            tableElements[0].innerHTML =  answers['correlation'] 
+            tableElements[1].innerHTML =  answers['pValue']         
+        }
+    })
+    }
+
+
+}
+
 // Deletes the widget with current class name (closest to button)
 function deleteWidget(button, className){
     var parent = button.closest(className);
@@ -135,31 +177,21 @@ function allowDrop(ev) {
     ev.dataTransfer.setData("text", ev.target.innerHTML);
   }
 
-  function columnDropTTest(ev) {
+  function columnDrop(ev) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.innerHTML = data;
   }
   
-  function columnDropDescriptive(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.innerHTML =  data;
-    descriptiveStatCalculation(ev.target, data)
-  }
 
-  function columnDropNormality(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.innerHTML = data;
-    normalityCalculation(ev.target, data)
-  }
 
   //Move widget up or down deping on parameter
   function moveOrder(button, direction) {
     var widget = button.closest(".widget");
     var canvas = document.getElementById("userCanvas");
     var sibling = direction === 1 ? widget.previousElementSibling : widget.nextElementSibling;
+
+
 
     if (sibling) {
         var oldIndex = Array.from(widget.parentNode.children).indexOf(widget);
@@ -181,11 +213,16 @@ function allowDrop(ev) {
             url: '/switchWidgetIndex',
             data: sendInfo,
             success: function(data) {
-                canvas.insertBefore(widget, sibling);
+                widgetInnerHTML = widget.innerHTML;
+                siblingInnerHTML = sibling.innerHTML;
                 if (direction === 1) {
+                    canvas.insertBefore(widget, sibling)
                     widget.innerHTML = widgetInnerHTML;
+
                 } else {
-                    sibling.innerHTML = widgetInnerHTML;
+                    canvas.insertBefore(sibling, widget)
+                    sibling.innerHTML = siblingInnerHTML;
+
                 }
             }
         });
