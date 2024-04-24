@@ -29,14 +29,14 @@ class descriptiveWidget extends HTMLElement {
                     <tr>
                         <th>Mean</th><th>Median</th><th>Mode</th><th>Variance</th><th>Standard Deviation</th><th>Count</th><th>Min</th><th>Max</th></tr>
                     <tr>
-                        <td class='descriptiveAnswer'>0</td>
-                        <td class='descriptiveAnswer'>0</td>
-                        <td class='descriptiveAnswer'>0</td>
-                        <td class='descriptiveAnswer'>0</td>
-                        <td class='descriptiveAnswer'>0</td>
-                        <td class='descriptiveAnswer'>0</td>
-                        <td class='descriptiveAnswer'>0</td>
-                        <td class='descriptiveAnswer'>0</td>
+                        <td class='descriptiveAnswer'>No column Selected</td>
+                        <td class='descriptiveAnswer'>No column Selected</td>
+                        <td class='descriptiveAnswer'>No column Selected</td>
+                        <td class='descriptiveAnswer'>No column Selected</td>
+                        <td class='descriptiveAnswer'>No column Selected</td>
+                        <td class='descriptiveAnswer'>No column Selected</td>
+                        <td class='descriptiveAnswer'>No column Selected</td>
+                        <td class='descriptiveAnswer'>No column Selected</td>
                     </tr>
                 </table>
             </div>
@@ -79,7 +79,7 @@ class normalityWidget extends HTMLElement {
             </div>
                 <div class='row'>
                     <table class='col-5 offset-3 normalityTable'><tr><th>PValue</th><th>Statistic</th></tr>
-                    <tr><td class='normalityAnswer'>0</td><td class='normalityAnswer'>0</td></tr></table>
+                    <tr><td class='normalityAnswer'>No column Selected</td><td class='normalityAnswer'>No column Selected</td></tr></table>
                 </div>
             </div>
         </div>`

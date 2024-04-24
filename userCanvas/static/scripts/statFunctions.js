@@ -295,9 +295,13 @@ function allowDrop(ev) {
                     newWidget.className = "row border border-dark widget pb-3 " + data[widget]['className']
                     canvas.appendChild(newWidget)
                     if (data[widget]['column'].length == 1){
+                        newWidget.getElementsByClassName('columnDrop')[0].querySelector("p").innerText = data[widget]['column']
                         eval(data[widget]['function'] + "(newWidget, " + widget + ", '" + data[widget]['column'] + "')")
                     }
                     if (data[widget]['column'].length == 2){
+                        newWidget.getElementsByClassName('columnDrop')[0].querySelector("p").innerText = data[widget]['column'][0]
+                        newWidget.getElementsByClassName('columnDrop')[1].querySelector("p").innerText = data[widget]['column'][1]
+
                         eval(data[widget]['function'] + "(newWidget, " + widget + ", '" + data[widget]['column'][0] + "', '"  + data[widget]['column'][1] + "')")
                     }
 

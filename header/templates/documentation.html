@@ -4,12 +4,14 @@
     <div class="col-8 offset-2 text-center">
         <h1>Documentation</h1>
         <p class="text-start" >
-        Welcome to the documentation for the pyStat application. This web application aims to provide a low-code solution for performing various statistical tests.
-        Its core functionality revolves around your uploaded dataset, which is converted into a dataframe upon upload.
-        Numerical columns from your CSV dataset are then displayed on the homepage.
-        You can drag these columns to your chosen widget, created using the buttons on the left side of the homepage.
-        Each widget calculates a specific statistical function on the selected dataset column.
-        The theory and exact functionality of each widget are explained on this page.
+            Welcome to the documentation for the pyStat application. This web application aims to provide a low-code solution for conducting various statistical tests.
+            Its primary functionality revolves around the dataset you upload, which is converted into a dataframe upon upload. 
+            You can upload your dataset using a CSV file by clicking the 'Upload CSV' button at the top of the page.
+            Once you've uploaded your CSV file, the names of the columns containing numerical values will be displayed on the homepage.
+            To proceed with using this app, select the button corresponding to the desired statistical test. 
+            This action will generate a widget on the canvas (homepage) that you can interact with by dragging columns to the designated area.
+            After clicking the calculate button, the widget will process and display the results of the corresponding test on the page.
+            For detailed explanations of the theory, background, and exact functionality of each widget, refer to the information provided on this page.
         </p>
 
 
@@ -47,9 +49,8 @@
             <li><p class="text-start">Measures of spread aim to explain how variable your data is. Included in this category are metrics like the variance, standard deviation, range, and interquartile range.</p></li>
         </ul>
         <p class="text-start" > 
-            In this web application, you can create a "Summary Statistic Widget." 
-            The purpose of this widget is to calculate various summary statistics for a selected column of your uploaded dataset. 
-            The widget calculates the following metrics:
+            It is possible to create a summary Statistic widget by pressing the corresponding button.
+            When you drag a column to the designated area, the summary Statistic widget will calculate the following statistics:
         </p>
         <ul>
             <li><p class="text-start">Mean: The average of all values.</p></li>
@@ -68,7 +69,7 @@
         <h2>Hypothesis Testing</h2>
         <p class="text-start">
             Hypothesis testing aims to determine if there is enough evidence in a sample of data to infer that a certain condition is true for the entire population.
-             In other words, it is a form of statistical inference. A standard hypothesis test typically follows these steps:
+            In other words, it is a form of statistical inference. A standard hypothesis test typically follows these steps:
         </p>
         <ul>
             <li><p class="text-start">Formulate the null hypothesis (H0), which represents your assumption about the data.</p></li>
@@ -80,13 +81,26 @@
         <p class="text-start">
             The p-value indicates the likelihood of observing the sample values. A low p-value suggests that the null hypothesis can be rejected. 
             For example, in a test for normality, the p-value indicates how likely the results are if the data were normally distributed. 
-            A low p-value in this case suggests that the data is not normally distributed. 
-            The significance level, typically set at 0.05, is chosen to minimize type 2 errors (false negatives) (Anderson, D. R., Sweeny, D. J., & Williams, n.d.).
+            A low p-value in this case suggests that the data is not normally distributed. A P-value of 0.05 can be read as a 5% change that this data would come from a normal distribution.
+            Which is why, with a low p-value we can be almost sure that are hypotheses is not correct. 
+            The significance level, typically set at 0.05, is chosen to minimize type 2 errors (false negatives), since we do not want to reject the null hypotheses while it is true. (Anderson, D. R., Sweeny, D. J., & Williams, n.d.).
         </p>
         
         <h2>Normality Test</h2>
         <p class="text-start">
-            The normality test aims to determine if a dataset is normally distributed by using the normal hypothesis testing workflow, which is as follows:
+
+            The normal distribution, also known as the Gaussian distribution, is one of the most important distributions in statistics. 
+            It is used in many statistical tests as an assumption because real-world data often fits the normal distribution. 
+            Essentially, the normal distribution is a bell-shaped curve that is symmetrical around the mean, meaning that data around the mean are more likely to occur than data far from the mean. 
+            The standard normal distribution has a mean of 0 and a standard deviation of 1 (Chen, J., 2024).
+        </p>
+        <img class=img-fluid src='static/images/normaldistribution.png'/>
+        <figcaption class="figure-caption"> source: <a href="https://www.nlm.nih.gov/oet/ed/stats/02-800.html">Image Source</a></figcaption>
+
+        <p class="text-start">  
+            Since the normal distribution is often assumed, it is important to determine if your data follows a normal distribution. 
+            This is the purpose of the normality test widget. By dragging a column to this widget, it will perform a normality test on the data. 
+            The normality test follows the normal hypothesis testing workflow, which is as follows:"
         </p>
         <ul>
             <li><p class="text-start">H0: The sample comes from a normal distribution.</p></li>
@@ -95,20 +109,42 @@
         </ul>
         <h2>T Test</h2>
         <p class="text-start" >
-        The ttest aims to test if the means of two indepdenent samples are significantly different from each other. It follows the normal hypothesis testing workflow, which is as follows:
+        The ttest aims to test if the means of two indepdenent samples are significantly different from each other. 
+        It makes the assumption that the data is approximly normally distributed.
+        The t-test widget can be used to execute a test on two columns which are dragged to it.
+        It follows the normal hypothesis testing workflow, which is as follows:
         </p>
         <ul>
             <li><p class="text-start">H0: The sample have identical averages</p></li>
             <li><p class="text-start">H1: The sample do not have identical averages</p></li>
             <li><p class="text-start">The t-statistic. More information can be found on <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.normaltest.html#id2">SciPy</a>.</p></li>
         </ul>
+        <h2>Correlation</h2>
+        <p class="text-start">
+            Correlation is defined as a measure that quantifies the strength of the relationship between two variables. 
+            The correlation coefficient, ranging between -1 and 1, indicates both the strength and direction of this relationship. 
+            The correlation widget enables users to compute the correlation between two columns. 
+            Upon creating the correlation widget and selecting a column, it calculates the correlation coefficient using the Pearson correlation coefficient. 
+            Furthermore, it conducts a hypothesis test to ascertain the significance of the correlation and assess whether the data follows a normal distribution. (Turney, S. 2024)
+            If there is a low p-value, the null hypothesis can be rejected, indicating that the correlation is significant.
+        </p>
+
         <h2>Bibliography</h2>
         <ol>
             <li>
-               <p>Neal, P., & Cavey, D. (2022, september), <cite>Foundations of statistics. </cite> from: https://bookdown.org/peter_neal/math4081_notes/intro.html#intro_stats</p>
+               <p class="text-start" >Neal, P., & Cavey, D. (2022, september), <cite>Foundations of statistics. </cite> from: https://bookdown.org/peter_neal/math4081_notes/intro.html#intro_stats</p>
             </li>
             <li>
-                <p>Anderson, D. R., Sweeny, D. J., & Williams, T. A. (n.d.). <cite>Sample survey methods </cite>. Encyclopædia Britannica. https://www.britannica.com/science/statistics/Sample-survey-methods </p>
+                <p class="text-start" >Anderson, D. R., Sweeny, D. J., & Williams, T. A. (n.d.). <cite>Sample survey methods </cite>. Encyclopædia Britannica. https://www.britannica.com/science/statistics/Sample-survey-methods </p>
+            </li>
+            <li>
+                <p class="text-start" >Chen, J. (2024, March 13). Normal Distribution: what it is, uses, and formula. Investopedia. https://www.investopedia.com/terms/n/normaldistribution.asp </p>
+            </li>
+            <li>
+                <p class="text-start" >Finding and using health statistics. (n.d.). https://www.nlm.nih.gov/oet/ed/stats/02-800.html </p>
+            </li>
+            <li>
+                <p class="text-start" >Turney, S. (2024, February 10). Pearson Correlation Coefficient (r) | Guide & Examples. Scribbr. https://www.scribbr.com/statistics/pearson-correlation-coefficient/</p>
             </li>
         </ol>
     </div>

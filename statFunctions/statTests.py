@@ -4,7 +4,6 @@ from matplotlib.figure import Figure
 from io import BytesIO
 import base64
 import numpy as np
-from scipy.stats import norm
 
 def ttest(dataInfo):
     """
@@ -46,11 +45,11 @@ def normalTest(column):
     Output: The normality test of the list
     """
     selectedColumn = session['dataset'].getColumn(column)
-    answer = sc.normaltest(selectedColumn)
+    answer = sc.kstest(selectedColumn , sc.norm.cdf)
     pvalue = answer.pvalue
     stat = answer.statistic
 
-    mu, sigma = norm.fit(selectedColumn)
+    mu, sigma = sc.norm.fit(data=selectedColumn)
 
     fig = Figure(figsize=(10, 3))
     ax = fig.subplots()
