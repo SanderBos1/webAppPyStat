@@ -19,7 +19,9 @@ def savePytest():
     """
     
     saveDictionary = {
-       "dataset": session['dataset'].getDataset().to_json()
+       "dataset": session['dataset'].getDataset().to_json(),
+        "state": json.dumps(session['userCanvasState'])
+
    } 
     with open('pystat.pyStat', 'w') as f:
         f.write(json.dumps(saveDictionary))
@@ -37,8 +39,8 @@ def loadPytest():
     f  = request.files['filename']
     data = json.loads(f.read())
     session['dataset'] = userDataset(pd.read_json(data['dataset']))
-  
-    return render_template('userCanvas.html', columns = session['dataset'].getColumns())
+    session['userCanvasState'] = json.loads(data['state'])
+    return redirect("/")
 
 @headerBP.route('/loadCSV', methods=["POST"])
 def loadCSV():
@@ -54,11 +56,14 @@ def loadCSV():
     if file.filename == '':
             flash('No selected file')
             return render_template('userCanvas.html')
+    
+    if session.get('userCanvasState') is  not None:    
+        session['userCanvasState'] = []
     f  = request.files['filename']
     df = pd.read_csv(f.stream)
     session['dataset'] = userDataset(df)
   
-    return render_template('userCanvas.html', columns = session['dataset'].getColumns())
+    return redirect("/")
 
 
 @headerBP.route('/documentation', methods=["GET"])

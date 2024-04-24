@@ -119,8 +119,10 @@ class ttestWidget extends HTMLElement {
                 <div class='columnDrop text-center' ondrop='columnDrop(event)' ondragover='allowDrop(event)'>
                     <p class='border border-dark dropPlace'> Drag column </p>
                 </div>
-                <p class='col-6'> Equal var? </p>
+                <div class='row mt-3'>
+                <p class='col-6 mt-3'> Equal var? </p>
                 <select class ='col-6 ttestIddChoice'><option value='True'>True</option><option value='False'>False</option></select>
+                </div>
                 <button class='btn btn-sm col-12 orangeBackground' onclick='statCalculation(this, ".ttestWidget", ttestCalculation)'>Calculate</button>
             </div>
             <div class='col-8 ttestImageHolder'>
