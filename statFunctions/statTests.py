@@ -76,7 +76,19 @@ def statCorrelation(dataInfo):
     column1 = session['dataset'].getColumn(dataInfo['column1'])
     column2 = session['dataset'].getColumn(dataInfo['column2'])
     answer = sc.stats.pearsonr(column1, column2)
+
+    fig = Figure(figsize=(10, 3))
+    ax = fig.subplots()
+    ax.scatter(column1, column2)
+    ax.set_xlabel(dataInfo['column1'])
+    ax.set_ylabel(dataInfo['column2'])
+    ax.set_title('Scatter Plot')
+    buf = BytesIO()
+    fig.savefig(buf, format="jpg")
+    imageData = base64.b64encode(buf.getbuffer()).decode("ascii")
+
     return {
         "correlation": str(answer[0]),
-        "pValue": str(answer[1])
-    }
+        "pValue": str(answer[1]),
+        "scatterImage": imageData
+    }   

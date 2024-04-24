@@ -1,34 +1,68 @@
 
-function statButtonListener(buttonId, widgetType, widgetClass) {
+//Helper functions
+
+// This function will add a listener to the button with the given id. When the button is clicked, it will add the widget to the page and save the widget state to the session variable
+function statButtonListener(buttonId, widgetType, widgetClass, functionCall) {
     const button = document.getElementById(buttonId);
     button.addEventListener("click", function() {
         addWidget(widgetType, widgetClass);
-        saveWidgetState(widgetType, widgetClass);
+        saveWidgetState(widgetType, widgetClass, functionCall);
     });
 }
 
-statButtonListener("addDescription", "descriptive-widget", "descriptiveWidget");
-statButtonListener("addMean", "normality-widget", "normalityWidget");
-statButtonListener("addTTest", "ttest-widget", "ttestWidget");
-statButtonListener("addCorrelation", "correlation-widget", "correlationWidget");
 
 //Input: the element to be added to the page and it's belong class name
 function addWidget(element, className){
     const widgetInstance = document.createElement(element)
-    widgetInstance.setAttribute("class", "row border border-dark widget " + className + " flex")
+    widgetInstance.setAttribute("class", "row border border-dark widget pb-3 " + className)
     document.getElementById("userCanvas").appendChild(widgetInstance)
 
 }
 
+// This functionw will select the imagePlaceholderClass closest to the parent and add the image to the placeholder
+function makeImage(parent, imagePlaceholderClass, imageData){
+    var imageHolder = parent.querySelector(imagePlaceholderClass)
+    imageHolder.innerHTML = "<img class=standard_img src='data:image/png;base64," + imageData + "'/>"
+}
+
+statButtonListener("addDescription", "descriptive-widget", "descriptiveWidget", "descriptiveStatCalculation");
+statButtonListener("addMean", "normality-widget", "normalityWidget", "normalityCalculation");
+statButtonListener("addTTest", "ttest-widget", "ttestWidget", "ttestCalculation");
+statButtonListener("addCorrelation", "correlation-widget", "correlationWidget", "correlationCalculation");
+
+
+function statCalculation(button, className, functionCall){
+    var parent = button.closest(className);
+    var index = Array.from(parent.parentNode.children).indexOf(parent);
+    if(parent.getElementsByClassName('columnDrop').length == 1){
+        column = parent.getElementsByClassName('columnDrop')[0].innerText;
+        functionCall(parent, index, column)
+
+    }
+    else{
+        column1= parent.getElementsByClassName('columnDrop')[0].innerText;
+        column2 = parent.getElementsByClassName('columnDrop')[1].innerText;
+        functionCall(parent, index, column1, column2)
+
+    }
+}
+
+
 // Calculates the descriptive statistics for the selected column
-function descriptiveStatCalculation(button){
-    var parent = button.closest(".descriptiveWidget");
-    column = parent.getElementsByClassName('columnDrop')[0].innerText;
+function descriptiveStatCalculation(parent, index, column){
+    var sendInfo = {
+        "column": column,
+        "index": index,
+    }
+    sendInfo = JSON.stringify(sendInfo)
     $.ajax({
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
     type:'POST',
-    url:'/summaryStatistics/' + column,
-    processData: false,
-    contentType: false,
+    url:'/summaryStatistics',
+    data: sendInfo,
     success:function(data)
     {
         // parse the return data so that it is in JSON format
@@ -46,14 +80,20 @@ function descriptiveStatCalculation(button){
 }
 
 // Calculates the normality test for the selected column
-function normalityCalculation(button){
-    var parent = button.closest(".normalityWidget");
-    column = parent.getElementsByClassName('columnDrop')[0].innerText;
+function normalityCalculation(parent, index, column){
+    var sendInfo = {
+        "column": column,
+        "index": index,
+    }
+    sendInfo = JSON.stringify(sendInfo)
     $.ajax({
+        headers: { 
+            'Accept': 'application/json',
+            'Content-Type': 'application/json' 
+        },
     type:'POST',
-    url:'/normality/' + column,
-    processData: false,
-    contentType: false,
+    url:'/normality',
+    data: sendInfo,
     success:function(data)
     {
         // parse the return data so that it is in JSON format
@@ -62,8 +102,7 @@ function normalityCalculation(button){
         tableElements = parent.getElementsByClassName('normalityAnswer');
         tableElements[0].innerHTML =  answers['pValue'] 
         tableElements[1].innerHTML =  answers['statistic'] 
-        var imageHolder = parent.querySelector(".normalImageHolder")
-        imageHolder.innerHTML = "<img class=standard_img src='data:image/png;base64," + answers['imageData'] + "'/>"
+        makeImage(parent, ".normalImageHolder", answers['imageData'])
 
 
     }
@@ -72,18 +111,15 @@ function normalityCalculation(button){
 
 // Calculates the ttest test for the selected columns
 
-function ttestCalculation(button){
-    var parent = button.closest(".ttestWidget");
-    columnElements = parent.getElementsByClassName('ttestDrop');
+function ttestCalculation(parent, index, column1, column2){
     selection = parent.getElementsByClassName('ttestIddChoice')[0].value;
-    if (!columnElements[0].innerHTML.includes("Drag column") && !columnElements[1].innerHTML.includes("Drag column")){
-        var column1 = columnElements[0].innerText
-        var column2 = columnElements[1].innerText
+    if (column1 != "Drag column" && column2 != "Drag column"){
 
         var sendInfo = {
             "column1": column1,
             "column2": column2,
-            "selection": selection
+            "selection": selection,
+            "index": index,
         }
         sendInfo = JSON.stringify(sendInfo)
         $.ajax({
@@ -102,9 +138,7 @@ function ttestCalculation(button){
             tableElements = parent.getElementsByClassName('ttestAnswer');
             tableElements[0].innerHTML =  answers['pValue'] 
             tableElements[1].innerHTML =  answers['statistic'] 
-            var imageHolder = parent.querySelector(".ttestImageHolder")
-            imageHolder.innerHTML = "<img class=standard_img src='data:image/png;base64," + answers['imageData'] + "'/>"
-    
+            makeImage(parent, ".ttestImageHolder", answers['imageData'])
         }
     })
     }
@@ -113,19 +147,13 @@ function ttestCalculation(button){
 }
 
 
-function correlationCalculation(button){
-    var parent = button.closest(".correlationWidget");
-
-    columnElements = parent.getElementsByClassName('doubleDrops')[0].getElementsByClassName('ttestDrop');
-    console.log(columnElements)
-
-    if (!columnElements[0].innerHTML.includes("Drag column") && !columnElements[1].innerHTML.includes("Drag column")){
-        var column1 = columnElements[0].innerText
-        var column2 = columnElements[1].innerText
+function correlationCalculation(parent, index, column1, column2){
+    if (column1 != "Drag column" && column2 != "Drag column"){
 
         var sendInfo = {
             "column1": column1,
             "column2": column2,
+            "index": index
         }
         sendInfo = JSON.stringify(sendInfo)
         $.ajax({
@@ -141,9 +169,9 @@ function correlationCalculation(button){
             answers = JSON.parse(data)
             // Gets the closest element with the class ttestWidget
             tableElements = parent.getElementsByClassName('correlationAnswer');
-            console.log(tableElements)
             tableElements[0].innerHTML =  answers['correlation'] 
             tableElements[1].innerHTML =  answers['pValue']         
+            makeImage(parent, ".correlationImageHolder", answers['scatterImage'])
         }
     })
     }
@@ -186,6 +214,7 @@ function allowDrop(ev) {
 
 
   //Move widget up or down deping on parameter
+  // Need to save internal state, otherwise the page forgets it
   function moveOrder(button, direction) {
     var widget = button.closest(".widget");
     var canvas = document.getElementById("userCanvas");
@@ -230,13 +259,15 @@ function allowDrop(ev) {
 }
 
  //When this function is called, it will add the state of the widget to the session variable
-  function saveWidgetState(type, className){
-
+  function saveWidgetState(type, className, functionString){
     var sendInfo = {
         "type": type,
         "className":className,
+        "function": functionString,
+        "column": "None"
     }
     sendInfo = JSON.stringify(sendInfo)
+
     $.ajax({
         headers: { 
             'Accept': 'application/json',
@@ -257,9 +288,21 @@ function allowDrop(ev) {
         url:'/getWidgetDictionary',
         success:function(data)
         {
-            if(data != "None"){
+            if(data != "noState"){
+                var canvas = document.getElementById("userCanvas");
                 for(widget in data){
-                    addWidget(data[widget]['type'], data[widget]['className']);
+                    var newWidget = document.createElement(data[widget]['type']);
+                    newWidget.className = "row border border-dark widget pb-3 " + data[widget]['className']
+                    canvas.appendChild(newWidget)
+                    if (data[widget]['column'].length == 1){
+                        eval(data[widget]['function'] + "(newWidget, " + widget + ", '" + data[widget]['column'] + "')")
+                    }
+                    if (data[widget]['column'].length == 2){
+                        eval(data[widget]['function'] + "(newWidget, " + widget + ", '" + data[widget]['column'][0] + "', '"  + data[widget]['column'][1] + "')")
+                    }
+
+
+                    
 
                 }
             }

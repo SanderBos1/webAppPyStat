@@ -18,12 +18,16 @@ def startPage():
         return render_template('userCanvas.html', columns = session['dataset'].getColumns())
     return render_template('userCanvas.html')
 
-@userCanvasBP.route('/summaryStatistics/<column>', methods=["POST", "GET"])
-def descriptive(column):
+@userCanvasBP.route('/summaryStatistics', methods=["POST", "GET"])
+def descriptive():
     """
     Handles the calculation of all descriptive statistics
+    Updates the userCnavasState dictionary with the selected column, needs index to associate correct widget with correct column
     Returns a JSON object with all the statistics
     """
+    sendInfo = request.json
+    column = sendInfo['column']
+
     columnMean = mean(column)
     columnMedian = median(column)
     columnMode = mode(column)
@@ -44,25 +48,32 @@ def descriptive(column):
         "columnMax": columnMax
     }
 
+    session['userCanvasState'][sendInfo['index']]['column'] = [sendInfo['column']]
     return json.dumps(descriptiveStats)
 
 
-@userCanvasBP.route('/normality/<column>', methods=["POST", "GET"])
-def normalTestRoute(column):
+@userCanvasBP.route('/normality', methods=["POST", "GET"])
+def normalTestRoute():
     """
     Calculates the normality test for the selected column
+        Updates the userCnavasState dictionary with the selected column, needs index to associate correct widget with correct column
+
     returns a json object with the p-value
     """
-    answer = normalTest(column)
+    sendInfo = request.json
+    session['userCanvasState'][sendInfo['index']]['column'] = [sendInfo['column']]
+    answer = normalTest(sendInfo['column'])
     return json.dumps(answer)
 
 @userCanvasBP.route('/ttest', methods=["POST", "GET"])
 def ttestTestRoute():
     """
     Calculates the normality test for the selected column
+    Updates the userCnavasState dictionary with the selected column, needs index to associate correct widget with correct column
     returns a json object with the p-value
     """
     sendInfo = request.json
+    session['userCanvasState'][sendInfo['index']]['column'] = [sendInfo['column1'], sendInfo['column2']]
     answer = ttest(sendInfo)
     return json.dumps(answer)
 
@@ -72,9 +83,12 @@ def ttestTestRoute():
 def correlation():
     """
     Calculates the correlation for the selected columns
+    Updates the userCnavasState dictionary with the selected column, needs index to associate correct widget with correct column
+
     """
     sendInfo = request.json
-    answer = statCorrelation(sendInfo) 
+    session['userCanvasState'][sendInfo['index']]['column'] = [sendInfo['column1'], sendInfo['column2']]
+    answer = statCorrelation(sendInfo)
     return json.dumps(answer)
 
 @userCanvasBP.route('/widgetDictionary', methods=["POST"])
@@ -92,7 +106,7 @@ def widgetDictionary():
         session['userCanvasState'].append(info)
     else:
         session['userCanvasState'].append(info)
- 
+        
     return  json.dumps("success")
 
 @userCanvasBP.route('/getWidgetDictionary', methods=["GET"])
@@ -101,8 +115,9 @@ def getWidgetDictionary():
     Returns a dictionary of all the widgets that are created in the userCanvas.
     Returns None if no session data is found.
     """
-    if session.get('userCanvasState') is  None:    
-        return None
+    if session.get('userCanvasState') is None:    
+        return "noState"
+    
     return session['userCanvasState']
 
 
